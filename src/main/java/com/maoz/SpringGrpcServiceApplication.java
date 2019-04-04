@@ -1,4 +1,4 @@
-package com.maoz.grpc;
+package com.maoz;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
