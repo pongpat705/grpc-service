@@ -11,24 +11,87 @@ import com.maoz.grpc.Person;
 import io.grpc.stub.StreamObserver;
 
 @GRpcService
-public class HelloWorldServiceImpl extends HelloWorldServiceImplBase{
+public class HelloWorldServiceImpl extends HelloWorldServiceImplBase {
 
-	private static final Logger LOGGER =
-		      LoggerFactory.getLogger(HelloWorldServiceImpl.class);
-	
+	private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldServiceImpl.class);
+
 	@Override
 	public void sayHello(Person request, StreamObserver<Greeting> responseObserver) {
 		LOGGER.info("server received {}", request);
 
-	    String message = "Hello " + request.getFirstName() + " "
-	        + request.getLastName() + "!";
-	    Greeting greeting =
-	        Greeting.newBuilder().setMessage(message).build();
-	    LOGGER.info("server responded {}", greeting);
+		String message = "Hello " + request.getFirstName() + " " + request.getLastName() + "!";
+		Greeting greeting = Greeting.newBuilder().setMessage(message).build();
+		LOGGER.info("server responded {}", greeting);
 
-	    responseObserver.onNext(greeting);
-	    responseObserver.onCompleted();
+		responseObserver.onNext(greeting);
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public void lotsOfReplies(Person request, StreamObserver<Greeting> responseObserver) {
+		LOGGER.info("server received {}", request);
+
+		for (int i = 0; i < 10; i++) {
+			String message = "Hello " + i + " : " + request.getFirstName() + " " + request.getLastName() + "!";
+			Greeting greeting = Greeting.newBuilder().setMessage(message).build();
+			responseObserver.onNext(greeting);
+			LOGGER.info("server responded {}", greeting);
+		}
+
+		responseObserver.onCompleted();
+	}
+
+	@Override
+	public StreamObserver<Person> lotsOfGreetings(StreamObserver<Greeting> responseObserver) {
+		// TODO Auto-generated method stub
+		return new StreamObserver<Person>() {
+
+			String names;
+			long startTime = System.nanoTime();
+
+			@Override
+			public void onNext(Person value) {
+				names += value.getFirstName()+",";
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				LOGGER.info("server err {}", t.getMessage());
+
+			}
+
+			@Override
+			public void onCompleted() {
+				responseObserver.onNext(Greeting.newBuilder().setMessage(names).build());
+				responseObserver.onCompleted();
+			}
+		};
+	}
+
+	@Override
+	public StreamObserver<Person> bidiHello(StreamObserver<Greeting> responseObserver) {
+		// TODO Auto-generated method stub
+		return new StreamObserver<Person>() {
+
+			@Override
+			public void onNext(Person value) {
+				// TODO Auto-generated method stub
+				responseObserver.onNext(Greeting.newBuilder().setMessage("Hello "+value.getFirstName()+" "+value.getLastName()).build());
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				// TODO Auto-generated method stub
+				LOGGER.info("server err {}", t.getMessage());
+			}
+
+			@Override
+			public void onCompleted() {
+				// TODO Auto-generated method stub
+				responseObserver.onCompleted();
+			}
+			
+		};
 	}
 
 }
- 
