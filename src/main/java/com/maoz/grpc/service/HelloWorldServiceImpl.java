@@ -47,10 +47,10 @@ public class HelloWorldServiceImpl extends HelloWorldServiceImplBase {
 		return new StreamObserver<Person>() {
 
 			String names;
-			long startTime = System.nanoTime();
 
 			@Override
 			public void onNext(Person value) {
+				LOGGER.info("server received {}", value.getFirstName());
 				names += value.getFirstName()+",";
 			}
 
@@ -75,7 +75,7 @@ public class HelloWorldServiceImpl extends HelloWorldServiceImplBase {
 
 			@Override
 			public void onNext(Person value) {
-				// TODO Auto-generated method stub
+				LOGGER.info("server received {}", value.getFirstName());
 				responseObserver.onNext(Greeting.newBuilder().setMessage("Hello "+value.getFirstName()+" "+value.getLastName()).build());
 			}
 
