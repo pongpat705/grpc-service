@@ -6,6 +6,7 @@ com/maoz/grpc/HelloWorld.class
 com/maoz/grpc/Person$Builder.class
 com/maoz/grpc/HelloWorldServiceGrpc$HelloWorldServiceBaseDescriptorSupplier.class
 com/maoz/grpc/HelloWorldServiceGrpc$HelloWorldServiceFileDescriptorSupplier.class
+com/maoz/grpc/service/HelloWorldServiceImpl$2.class
 com/maoz/grpc/HelloWorldServiceGrpc$HelloWorldServiceImplBase.class
 com/maoz/grpc/GreetingOrBuilder.class
 com/maoz/grpc/Person.class
@@ -15,6 +16,7 @@ com/maoz/grpc/PersonOrBuilder.class
 com/maoz/grpc/HelloWorldServiceGrpc$HelloWorldServiceFutureStub.class
 com/maoz/grpc/Greeting.class
 com/maoz/grpc/Person$1.class
+com/maoz/grpc/service/HelloWorldServiceImpl$1.class
 com/maoz/grpc/HelloWorldServiceGrpc$1.class
 com/maoz/grpc/HelloWorldServiceGrpc$MethodHandlers.class
 com/maoz/grpc/HelloWorldServiceGrpc.class
